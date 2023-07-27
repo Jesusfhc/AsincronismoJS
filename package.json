@@ -1,0 +1,11 @@
+{
+  "name": "video-7-platzi-asincronismo",
+  "version": "1.0.0",
+  "description": "Curso de Asincronismo de Platzi",
+  "main": "00-callbacks.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jesus Hernandez jjesusfhernandez@gmail.com",
+  "license": "MIT"
+}
