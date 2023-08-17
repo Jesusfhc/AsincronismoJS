@@ -17,3 +17,8 @@ function fetchData(urlApi, callback) {
     }
     xhhtp.send(); //envia el request presentado
 }
+
+fetchData(`${API}/products`, (error1, data1)=>{
+    if(error1) return console.error(error1);
+    fetchData(`${API}/products`, )
+} )
