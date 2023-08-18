@@ -1,24 +1,34 @@
-const XMLHttpRequest = require('xmlhttprequest'); // objeto Javascript que se utiliza para consumir API
-const API = 'https://api.escuelajs.co/api/v1'; // api que se pretende consumir 
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest; 
+const API = 'https://api.escuelajs.co/api/v1'; 
 
 function fetchData(urlApi, callback) {
-    let xhhtp = new XMLHttpRequest(); // creando una nueva instancia del objeto
+    let xhttp = new XMLHttpRequest(); 
 
-    xhhtp.open('GET', urlApi, true); //metodo que se utiliza para solicitar al api
-    xhhtp.onreadystatechange = function (event) {
-        if(xhhtp.readyState === 4) { // 4 significa que hubo coneccion 
-            if(xhhtp.status === 200) { // 200 que la solicitud fue correcta
-                callback(null, JSON.parse(xhhtp.resposeText)); //responseText, el resultado de la API en un texto
-            }
-        } else {
-            const error = new Error('Error'+ urlApi)
-            return callback(error, null)
+    xhttp.open('GET', urlApi, true);  
+    xhttp.onreadystatechange = function (event) {
+        if(xhttp.readyState === 4) { 
+            if(xhttp.status === 200) { 
+                callback(null, JSON.parse(xhttp.responseText)); 
+            } else {
+            const error = new Error('Error'+ urlApi);
+            return callback(error, null);
         }
+      } 
     }
-    xhhtp.send(); //envia el request presentado
-}
+    xhttp.send(); 
+};
 
-fetchData(`${API}/products`, (error1, data1)=>{
+fetchData(`${API}/products`, function (error1, data1) {
     if(error1) return console.error(error1);
-    fetchData(`${API}/products`, )
-} )
+    fetchData(`${API}/products/${data1[0].id}`, function (error2, data2) {
+        if (error2) return console.error(error2);
+        fetchData(`${API}/categories/${data2?.category?.id}`, function (error3, data3) {
+            if (error3) return console.error(error3);
+            console.log(data1[0]);
+            console.log(data2.title);
+            console.log(data3.name);
+        });
+    });
+});
+
+
